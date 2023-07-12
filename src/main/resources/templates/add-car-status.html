@@ -1,0 +1,87 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Add status</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+    <link href="../static/css/style.css" th:href="@{/css/style.css}" rel="stylesheet"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</head>
+<body>
+<div th:insert="Navbar :: navbar"></div>
+<div class="container my-5">
+
+    <div class="row justify-content-center">
+
+        <div class="col-md-8">
+            <div th:if="${param.success}">
+                        <div class="alert alert-success alert-dismissible">
+                            <button type="button" class="close" data-dismiss="alert">&times;</button>
+                            <strong>Car status successfully saved!</strong>
+                        </div>
+                    </div>
+            <h2>Add <b>car status</b></h2>
+            <div class="card">
+                <div class="card-body">
+
+                    <form class="form-horizontal" th:action="@{/car-status/{carId}(carId=${carId})}"
+                          th:object="${carStatusRequestParams}" method="post">
+
+                        <div class="form-group">
+                            <label for="date" class="cols-md-2 control-label">Select date</label>
+                            <div class="cols-md-10">
+                                <div class="input-group">
+                                    <input type="date" th:field="*{date}" class="form-control" autocomplete="off"
+                                           id="date"
+                                           placeholder="Date">
+                                    <span th:if="${#fields.hasErrors('date')}" th:errors="*{date}"
+                                          class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="status" class="cols-md-2 control-label">Select status</label>
+                            <div class="cols-md-10">
+                                <div class="input-group">
+                                    <select class="form-control selectpicker" th:field="*{statusId}" id="status">
+                                        <option value=""></option>
+                                        <option th:each="status: ${statuses}"
+                                                th:value="${status.id}"
+                                                th:text="${status.status}">
+                                        </option>
+
+                                    </select>
+                                    <span th:if="${#fields.hasErrors('statusId')}" th:errors="*{statusId}"
+                                          class="text-danger"></span>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group ">
+                            <button type="submit" class="btn btn-primary btn-lg btn-block">Add</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+</div>
+<script th:src="@{assets/custom-file-input/bs-custom-file-input.js}"></script>
+
+
+<script>
+    bsCustomFileInput.init();
+
+</script>
+
+</body>
+</html>

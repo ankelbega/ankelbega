@@ -1,0 +1,79 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Assign Cars</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+    <link href="../static/css/style.css" th:href="@{/css/style.css}" rel="stylesheet"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</head>
+<body>
+<div th:insert="Navbar :: navbar"></div>
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-6">
+            <div th:if="${param.success}">
+                <div class="alert alert-success alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    <strong>Car successfully assigned to the branch!</strong>
+                </div>
+            </div>
+        </div>
+    </div>
+    <form th:action="@{/load-available-cars/{branchId}(branchId=${branchId})}" th:object="${dateFilterParam}"
+          method="get">
+        <div class="row">
+            <div class="col-md-4">
+
+                <div class="input-group date">
+                    <input type="date" class="form-control" name="date" autocomplete="off" th:field="*{date}"/>
+                </div>
+            </div>
+            <div col-md-3>
+                <button type="submit" class="btn btn-success">Search</button>
+            </div>
+        </div>
+    </form>
+    <div class="row mt-4">
+        <div class="col-md-4">
+            <h2>Available <b>Cars</b></h2>
+        </div>
+    </div>
+    <table class="table table-striped table-hover">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Brand</th>
+            <th>Model</th>
+            <th>Body type</th>
+            <th>Color</th>
+            <th>Year</th>
+            <th>Mileage</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="car: ${availableCars}">
+            <td th:text="${car.id}"></td>
+            <td th:text="${car.brand}"></td>
+            <td th:text="${car.model}"></td>
+            <td th:text="${car.bodyType}"></td>
+            <td th:text="${car.color}"></td>
+            <td th:text="${car.year}"></td>
+            <td th:text="${car.mileage}"></td>
+            <td>
+                <a th:href="@{/assign/car/{carId}/branch/{branchId}(carId = ${car.id}, branchId = ${branchId})}"
+                   class="btn">ASSIGN</a>
+
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

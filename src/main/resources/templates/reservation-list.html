@@ -1,0 +1,73 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Reservation</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+    <link href="../static/css/style.css" th:href="@{/css/style.css}" rel="stylesheet"/>
+</head>
+<div th:insert="Navbar :: navbar"></div>
+<body>
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-4">
+            <h2>Manage <b>Reservation</b></h2>
+            <div th:if="${param.success}">
+                <div class="alert alert-info">You've successfully delete
+                    the reservation!
+                </div>
+            </div>
+            <div th:if="${param.successInserted}">
+                <div class="alert alert-info">You've successfully inserted
+                    the reservation!
+                </div>
+            </div>
+        </div>
+    </div>
+    <table class="table table-striped table-hover">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>PickupDate</th>
+            <th>ReturnDate</th>
+            <th>Customer</th>
+            <th>Amount</th>
+            <th>Car</th>
+            <th>Rental Name</th>
+            <div sec:authorize="hasRole('ADMIN')">
+                <th>Action</th>
+            </div>
+            <th>Cancel Reservation</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="reservation: ${reservations}">
+            <td th:text="${reservation.id}"></td>
+            <td th:text="${reservation.pickupDate}"></td>
+            <td th:text="${reservation.returnDate}"></td>
+            <td th:text="${reservation.user.firstName}"></td>
+            <td th:text="${reservation.amountOfReservation}"></td>
+            <td th:text="${reservation.car.brand}"></td>
+            <td th:text="${reservation.car.branch.rental.name}"></td>
+            <div sec:authorize="hasRole('ADMIN')">
+                <td><a th:href="@{/delete/reservation/{reservationId}(reservationId=${reservation.id})}" class="btn"><i
+                        class="fas fa-trash-alt"
+                        style="color:red"
+                        data-toggle="tooltip"
+                        title="Delete reservation">&#xE872;</i></a></td>
+            </div>
+            <td>
+                <a th:href="@{/cancel/reservation/{reservationId}(reservationId=${reservation.id})}" class="btn"><i
+                        class="fas fa-user-slash"
+                        data-toggle="tooltip"
+                        title="Edit reservation">&#xE254;</i></a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
