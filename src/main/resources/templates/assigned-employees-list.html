@@ -1,0 +1,86 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Employees</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+    <link href="../static/css/style.css" th:href="@{/css/style.css}" rel="stylesheet"/>
+
+</head>
+<body>
+<div th:insert="Navbar :: navbar"></div>
+<div class="container mt-5">
+
+    <div class="row">
+        <div class="col-md-4">
+            <h2><b>Employees</b></h2>
+        </div>
+    </div>
+    <div class="row mt-2 mb-4">
+    </div>
+    <table class="table table-striped table-hover">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Address</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="employee: ${employees}">
+            <td th:text="${employee.id}"></td>
+            <td th:text="${employee.firstName}"></td>
+            <td th:text="${employee.lastName}"></td>
+            <td th:text="${employee.username}"></td>
+            <td th:text="${employee.email}"></td>
+            <td th:text="${employee.address}"></td>
+            <td><a th:href="@{/remove/assigned-user/{userId}/branch/{branchId}(userId = ${employee.id}, branchId = ${branchId})}" class="btn">REMOVE</a></td>
+
+        </tr>
+        </tbody>
+    </table>
+
+    <div class="row mt-5">
+        <div class="col-md-4">
+            <h2><b>Manager</b></h2>
+        </div>
+    </div>
+    <div class="row mt-2 mb-4">
+    </div>
+    <table class="table table-striped table-hover">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Address</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="manager: ${managers}">
+            <td th:text="${manager.id}"></td>
+            <td th:text="${manager.firstName}"></td>
+            <td th:text="${manager.lastName}"></td>
+            <td th:text="${manager.username}"></td>
+            <td th:text="${manager.email}"></td>
+            <td th:text="${manager.address}"></td>
+            <td><a th:href="@{/remove/assigned-user/{userId}/branch/{branchId}(userId = ${manager.id}, branchId = ${branchId})}" class="btn">REMOVE</a></td>
+
+        </tr>
+        </tbody>
+    </table>
+
+
+</div>
+</div>
+</body>

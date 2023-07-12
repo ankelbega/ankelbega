@@ -1,0 +1,137 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Statistic</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+    <link href="../static/css/style.css" th:href="@{/css/style.css}" rel="stylesheet"/>
+</head>
+<body>
+<div th:insert="Navbar :: navbar"></div>
+<div class="container mt-5 ">
+    <div class="row mt-2 mb-4">
+        <div class="col-md-12  text-center">
+            <h2>Different statistic in<b> rental</b></h2>
+        </div>
+    </div>
+    <div class="row mt-5">
+        <div class="col-md-6 text-secondary font-italic">
+            <h3>Number of reservation for each branch</h3>
+        </div>
+    </div>
+    <div class="row mt-2 mb-4">
+    </div>
+    <table class="table table-striped table-hover col-md-5">
+        <thead>
+        <tr>
+            <th>Address</th>
+            <th>Number of reservation</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="countInBranch: ${countReservationBranch}">
+            <td th:text="${countInBranch.address}"></td>
+            <td th:text="${countInBranch.count}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-8 text-secondary font-italic">
+            <h3>Number of cars for each booking date</h3>
+        </div>
+    </div>
+    <div class="row mt-2 mb-4">
+    </div>
+    <table class="table table-striped table-hover col-md-5">
+        <thead>
+        <tr>
+            <th>BookingDate</th>
+            <th>Number of car</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="countForEachBookingDate: ${countReservationBooking}">
+            <td th:text="${countForEachBookingDate.bookingDate}"></td>
+            <td th:text="${countForEachBookingDate.count}"></td>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-7 text-secondary font-italic">
+            <h3>Select brand that has max reserved cars</h3>
+        </div>
+    </div>
+    <div class="row mt-2 mb-4">
+    </div>
+    <table class="table table-striped table-hover col-md-5">
+        <thead>
+        <tr>
+            <th>Name of carBrand</th>
+            <th>Number of car</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="maxBrand: ${brandCountResponseParams}">
+            <td th:text="${maxBrand.name}"></td>
+            <td th:text="${maxBrand.count}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-7 text-secondary font-italic">
+            <h3>Select carBrand that has maxMileage</h3>
+        </div>
+    </div>
+    <div class="row mt-2 mb-4">
+    </div>
+    <table class="table table-striped table-hover col-md-8">
+        <thead>
+        <tr>
+            <th>Name of carBrand</th>
+            <th>Branch address of car</th>
+            <th>Mileage Of Car</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="carMaxMileage: ${carMaxMileageRequestParams}">
+            <td th:text="${carMaxMileage.brandName}"></td>
+            <td th:text="${carMaxMileage.branchAddress}"></td>
+            <td th:text="${carMaxMileage.maxMileageOfCar}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-7 text-secondary font-italic">
+            <h3>Number of car in each branch</h3>
+        </div>
+    </div>
+    <div class="row mt-2 mb-4">
+    </div>
+    <table class="table table-striped table-hover col-md-8">
+        <thead>
+        <tr>
+            <th>Number of car</th>
+            <th>Branch address of car</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="carCount: ${carCountRequestParams}">
+            <td th:text="${carCount.countCarInBranch}"></td>
+            <td th:text="${carCount.branchAddress}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>

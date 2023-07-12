@@ -1,0 +1,57 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Cars</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+    <link href="../static/css/style.css" th:href="@{/css/style.css}" rel="stylesheet"/>
+
+</head>
+
+<div th:insert="Navbar :: navbar"></div>
+<div class="container mt-5">
+
+    <div class="row">
+        <div class="col-md-4">
+            <h2>Manage <b>Cars</b></h2>
+        </div>
+    </div>
+
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-4 mt-4" th:each="car: ${filteredCars}">
+            <div class="card" style="width:350px">
+                <img class="card-img-top" th:src="@{image-car/{carId}(carId=${car.id})}" alt="filter card image"
+                     style="width:100%">
+                <div class="card-body">
+                    <h4 class="card-title" th:text="${car.brand} +' '+ ${car.model}"></h4>
+                    <p class="card-text"
+                       th:text="'Body type: '+${car.bodyType} +', '+ 'Color: '+${car.color} +', '+ 'Year: '+ ${car.year} +', '+
+                       'Mileage: '+ ${car.mileage} +', '+'Amount: '+ ${car.amount}"></p>
+                    <div sec:authorize="hasRole('ADMIN')">
+                    <a th:href="@{edit/car/{carId}(carId=${car.id})}" class="btn"><i class="far fa-edit"
+                                                                                     style="font-size:24px;color:green"
+                                                                                     data-toggle="tooltip"
+                                                                                     title="Edit car">&#xE872;</i></a>
+                    <a th:href="@{/car/{carId}(carId=${car.id})}" class="btn"><i class="fas fa-trash-alt"
+                                                                                 style="font-size:24px;color:red"
+                                                                                 data-toggle="tooltip"
+                                                                                 title="Delete car">&#xE872;</i></a>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+</body>
+
+</html>
+
